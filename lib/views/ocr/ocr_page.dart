@@ -12,6 +12,7 @@ import 'package:indoor_object_detection/widgets/custom_camera_button.dart';
 import 'package:indoor_object_detection/widgets/custom_gallery_button.dart';
 import 'package:indoor_object_detection/widgets/custom_loading.dart';
 import 'package:indoor_object_detection/widgets/custom_switch_camera_button.dart';
+import 'package:indoor_object_detection/widgets/custom_template.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 class OcrPage extends ConsumerStatefulWidget {
@@ -71,13 +72,16 @@ class _ScanTextPageState extends ConsumerState<OcrPage> {
 
       if (albums.isNotEmpty) {
         final recentAlbum = albums.first;
-        final recentAssets =
-        await recentAlbum.getAssetListPaged(page: 0, size: 1);
+        final recentAssets = await recentAlbum.getAssetListPaged(
+          page: 0,
+          size: 1,
+        );
 
         if (recentAssets.isNotEmpty) {
           final asset = recentAssets.first;
-          final thumb =
-          await asset.thumbnailDataWithSize(const ThumbnailSize(200, 200));
+          final thumb = await asset.thumbnailDataWithSize(
+            const ThumbnailSize(200, 200),
+          );
           _thumbnailImage = thumb;
           setState(() {});
         }
@@ -100,56 +104,53 @@ class _ScanTextPageState extends ConsumerState<OcrPage> {
   Widget build(BuildContext context) {
     final ocrController = ref.read(ocrProvider.notifier);
 
-    return Scaffold(
-      body: SizedBox.expand(
-        child: Stack(
-          children: [
-            SafeArea(
-              child: Container(
-                color: Colors.black,
-                child: Stack(
-                  children: [
-                    _cameraController != null
-                        ? CameraPreview(_cameraController!)
-                        : const SizedBox(),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: marginX2),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomGalleryButton(
-                              onTap: () async {
-                                XFile? file = await ImagePicker().pickImage(
-                                  source: ImageSource.gallery,
-                                );
+    return CustomTemplate(
+      title: 'OCR',
+      showBackButton: true,
+      body: Stack(
+        children: [
+          SafeArea(
+            child: Stack(
+              children: [
+                _cameraController != null
+                    ? CameraPreview(_cameraController!)
+                    : const SizedBox(),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: marginX2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomGalleryButton(
+                          onTap: () async {
+                            XFile? file = await ImagePicker().pickImage(
+                              source: ImageSource.gallery,
+                            );
 
-                                if (file != null) {
-                                  await ocrController.uploadImage(File(file.path));
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (_) => ScanTextResultPage(imageFile: File(file.path)),
-                                  //   ),
-                                  // );
-                                }
-                              },
-                              thumbnailImage: _thumbnailImage,
-                            ),
-                            CustomCameraButton(onTap: _scanText),
-                            CustomSwitchCameraButton(onTap: _switchCamera),
-                          ],
+                            if (file != null) {
+                              await ocrController.uploadImage(File(file.path));
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (_) => ScanTextResultPage(imageFile: File(file.path)),
+                              //   ),
+                              // );
+                            }
+                          },
+                          thumbnailImage: _thumbnailImage,
                         ),
-                      ),
+                        CustomCameraButton(onTap: _scanText),
+                        CustomSwitchCameraButton(onTap: _switchCamera),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-            _loading(),
-          ],
-        ),
+          ),
+          _loading(),
+        ],
       ),
     );
   }
@@ -168,19 +169,16 @@ class _ScanTextPageState extends ConsumerState<OcrPage> {
     // );
   }
 
-  Widget _loading() {
-    final isLoading = ref.watch(ocrProvider).isLoading;
-
-    return Visibility(
-      visible: isLoading,
-      child: const CustomLoading(),
-    );
-  }
-
   void _switchCamera() {
     if (_cameras == null || _cameras!.length < 2) return;
 
     _selectedCameraIndex = (_selectedCameraIndex + 1) % _cameras!.length;
     _initializeCamera(_selectedCameraIndex);
+  }
+
+  Widget _loading() {
+    final isLoading = ref.watch(ocrProvider).isLoading;
+
+    return Visibility(visible: isLoading, child: const CustomLoading());
   }
 }

@@ -4,15 +4,11 @@ import 'ocr_model.dart';
 part 'ocr_state.freezed.dart';
 
 @freezed
-class OcrState with _$OcrState {
+abstract class OcrState with _$OcrState {
   const factory OcrState({
     @Default(false) bool isLoading,
     OcrModel? ocrText,
   }) = _OcrState;
 
-  @override
-  bool get isLoading => throw UnimplementedError();
-
-  @override
-  OcrModel? get ocrText => throw UnimplementedError();
+  const OcrState._();
 }

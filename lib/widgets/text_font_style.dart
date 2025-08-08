@@ -4,7 +4,7 @@ import 'package:indoor_object_detection/constant/value_constant.dart';
 
 class TextFontStyle extends StatelessWidget {
   final String data;
-  final Color? color;
+  final Color color;
   final TextStyle? style;
   final double size;
   final FontWeight weight;
@@ -15,7 +15,7 @@ class TextFontStyle extends StatelessWidget {
   const TextFontStyle(
       this.data, {
         super.key,
-        this.color,
+        this.color = Colors.black,
         this.style,
         this.size = fontSizeS,
         this.weight = FontWeight.normal,

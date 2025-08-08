@@ -206,8 +206,8 @@ return $default(_that.isLoading,_that.ocrText);case _:
 /// @nodoc
 
 
-class _OcrState implements OcrState {
-  const _OcrState({this.isLoading = false, this.ocrText});
+class _OcrState extends OcrState {
+  const _OcrState({this.isLoading = false, this.ocrText}): super._();
   
 
 @override@JsonKey() final  bool isLoading;

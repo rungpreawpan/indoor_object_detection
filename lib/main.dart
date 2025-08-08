@@ -16,10 +16,16 @@ class MyApp extends StatelessWidget {
       title: 'Indoor Object Detection',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        useMaterial3: false,
         brightness: Brightness.light,
         primaryColor: primaryColor,
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.white,
+        ),
       ),
       home: CustomBottomNavigation(),
       // home: const HomePage(),
