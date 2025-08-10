@@ -47,12 +47,10 @@ class CustomSubmitButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: buttonColor,
           borderRadius: BorderRadius.circular(borderRadius),
-          border: showBorder
-              ? Border.all(
-            color: borderColor,
-            width: borderWidth,
-          )
-              : null,
+          border:
+              showBorder
+                  ? Border.all(color: borderColor, width: borderWidth)
+                  : null,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

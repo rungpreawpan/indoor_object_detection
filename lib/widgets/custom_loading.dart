@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:indoor_object_detection/constant/value_constant.dart';
 import 'package:indoor_object_detection/widgets/text_font_style.dart';
 
@@ -16,14 +17,14 @@ class CustomLoading extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(20.0),
           ),
-          child: const Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
               CircularProgressIndicator(color: primaryColor),
               SizedBox(height: marginX2),
               TextFontStyle(
-                'กำลังโหลด',
+                'loading'.tr,
                 color: Colors.black,
                 weight: FontWeight.bold,
                 size: fontSizeM,

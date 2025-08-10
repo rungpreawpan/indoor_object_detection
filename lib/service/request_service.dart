@@ -5,6 +5,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:indoor_object_detection/constant/environment.dart';
+import 'package:indoor_object_detection/utils/alert.dart';
 
 enum HttpMethod {
   get,
@@ -57,12 +58,11 @@ class RequestService {
         }
 
         if (showAlertIfError) {
-          //TODO
-          // showAlert(
-          //   title,
-          //   content: 'กรุณาลองใหม่',
-          //   remark: remark,
-          // );
+          showAlert(
+            title,
+            content: 'กรุณาลองใหม่',
+            remark: remark,
+          );
         } else {
           log('$title: $remark');
         }

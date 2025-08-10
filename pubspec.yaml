@@ -5,23 +5,35 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.7.2
+  sdk: ^3.6.0
 
 dependencies:
   flutter:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
-  flutter_riverpod: ^2.6.1
-  intl: ^0.20.2
-  dio: ^5.8.0+1
-  connectivity_plus: ^6.1.4
-  google_fonts: ^6.3.0
-  freezed_annotation: ^3.1.0
-  camera: ^0.11.2
+  get: ^4.6.6
+  google_fonts: ^6.2.1
+  package_info_plus: ^8.1.1
+  flutter_secure_storage: ^9.2.2
+  shared_preferences: ^2.3.3
+  permission_handler: ^11.3.1
+  flutter_localization: ^0.2.2
+  flutter_svg: ^2.0.16
+  sensors_plus: ^6.1.1
+  flutter_tts: ^4.2.2
   image_picker: ^1.1.2
-  flutter_svg: ^2.2.0
-  photo_manager: ^3.7.1
+  image: ^4.5.3
+  camera: ^0.11.1
+  speech_to_text: ^7.0.0
+  connectivity_plus: ^6.1.3
+  dio: ^5.8.0+1
+  android_id: ^0.4.0
+  device_info_plus: ^11.2.1
+  flutter_keyboard_visibility: ^6.0.0
+  intl: ^0.19.0
+  translator: ^1.0.3+1
+  photo_manager: ^3.7.0
 
 dev_dependencies:
   flutter_test:
@@ -36,3 +48,5 @@ flutter:
 
   assets:
     - assets/icons/
+    - assets/intro/
+    - assets/logo/

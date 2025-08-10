@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 import 'package:indoor_object_detection/constant/value_constant.dart';
 import 'package:indoor_object_detection/views/home/home_page.dart';
 import 'package:indoor_object_detection/views/settings/settings_page.dart';
 
-class CustomBottomNavigation extends StatefulWidget {
-  const CustomBottomNavigation({super.key});
+class CustomNavBar extends StatefulWidget {
+  const CustomNavBar({super.key});
 
   @override
-  State<CustomBottomNavigation> createState() => _CustomBottomNavigationState();
+  State<CustomNavBar> createState() => _CustomNavBarState();
 }
 
-class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
+class _CustomNavBarState extends State<CustomNavBar> {
   int currentIndex = 0;
 
   final List _screen = [const HomePage(), const SettingsPage()];
@@ -20,39 +20,32 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: _screen[currentIndex],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          boxShadow: lightBoxShadow,
+          boxShadow: customBoxShadow,
           borderRadius: const BorderRadius.only(
             topRight: Radius.circular(25.0),
             topLeft: Radius.circular(25.0),
           ),
         ),
         child: SafeArea(
-          child: SizedBox(
-            height: 80.0,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(25.0),
-                topLeft: Radius.circular(25.0),
-              ),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(25.0),
+              topLeft: Radius.circular(25.0),
+            ),
+            child: SizedBox(
+              height: 80.0,
               child: BottomNavigationBar(
                 type: BottomNavigationBarType.fixed,
                 backgroundColor: Colors.white,
                 selectedFontSize: fontSizeS,
                 unselectedFontSize: fontSizeS,
                 selectedItemColor: Colors.black,
-                unselectedItemColor: Colors.grey.shade300,
-                selectedLabelStyle: TextStyle(
-                  fontFamily: GoogleFonts.kanit().fontFamily,
-                  color: Colors.black,
-                ),
-                unselectedLabelStyle: TextStyle(
-                  fontFamily: GoogleFonts.kanit().fontFamily,
-                  color: Colors.grey.shade300,
-                ),
+                unselectedItemColor: Colors.grey.shade400,
                 currentIndex: currentIndex,
                 onTap: (index) {
                   currentIndex = index;
@@ -67,10 +60,9 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
                       height: 25.0,
                       width: 25.0,
                       fit: BoxFit.fitHeight,
-                      color:
-                          currentIndex == 0 ? Colors.black : Colors.grey.shade300,
+                      color: _iconColor(currentIndex == 0),
                     ),
-                    label: 'Home Page',
+                    label: 'main page'.tr,
                     tooltip: '',
                   ),
                   BottomNavigationBarItem(
@@ -81,10 +73,9 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
                       height: 30.0,
                       width: 30.0,
                       fit: BoxFit.fitHeight,
-                      color:
-                          currentIndex == 1 ? Colors.black : Colors.grey.shade300,
+                      color: _iconColor(currentIndex == 1),
                     ),
-                    label: 'Settings',
+                    label: 'settings'.tr,
                     tooltip: '',
                   ),
                 ],
@@ -94,5 +85,17 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
         ),
       ),
     );
+  }
+
+  Color _iconColor(bool isSelected) {
+    Color color = Colors.black;
+
+    if (isSelected) {
+      color = Colors.black;
+    } else {
+      color = Colors.grey.shade400;
+    }
+
+    return color;
   }
 }

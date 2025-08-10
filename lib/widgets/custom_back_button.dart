@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:indoor_object_detection/constant/value_constant.dart';
 
 class CustomBackButton extends StatefulWidget {
   final Function()? onTap;
 
-  const CustomBackButton({super.key, this.onTap});
+  const CustomBackButton({
+    super.key,
+    this.onTap,
+  });
 
   @override
   State<CustomBackButton> createState() => _CustomBackButtonState();
@@ -15,7 +19,7 @@ class _CustomBackButtonState extends State<CustomBackButton> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pop(context);
+        Get.back();
 
         if (widget.onTap != null) {
           widget.onTap;
@@ -28,7 +32,9 @@ class _CustomBackButtonState extends State<CustomBackButton> {
           width: 40.0,
           margin: const EdgeInsets.symmetric(vertical: 25.0),
           decoration: BoxDecoration(
-            border: Border.all(color: primaryColor),
+            border: Border.all(
+              color: primaryColor,
+            ),
             borderRadius: BorderRadius.circular(20.0),
           ),
           child: Center(

@@ -12,7 +12,7 @@ class ObjectDetectionModel {
   factory ObjectDetectionModel.fromJSON(Map<String, dynamic> json) {
     return ObjectDetectionModel(
       boxes:
-      List.from(json['boxes']).map((e) => BoxesModel.fromJSON(e)).toList(),
+          List.from(json['boxes']).map((e) => BoxesModel.fromJSON(e)).toList(),
       imageWidth: int.parse(json['image_width'].toString()),
       imageHeight: int.parse(json['image_height'].toString()),
     );

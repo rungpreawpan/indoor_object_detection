@@ -1,9 +1,9 @@
 class OcrModel {
-  final String? text;
-  final String? language;
-  final DateTime? timestamp;
+  String? text;
+  String? language;
+  DateTime? timestamp;
 
-  const OcrModel({
+  OcrModel({
     this.text,
     this.language,
     this.timestamp,
@@ -13,7 +13,7 @@ class OcrModel {
     DateTime? timestamp;
 
     if (json['timestamp'] != null) {
-      timestamp = DateTime.tryParse(json['timestamp'].toString());
+      timestamp = DateTime.parse(json['timestamp'].toString());
     }
 
     return OcrModel(
@@ -22,10 +22,4 @@ class OcrModel {
       timestamp: timestamp,
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        'text': text,
-        'lang': language,
-        'timestamp': timestamp?.toIso8601String(),
-      };
 }

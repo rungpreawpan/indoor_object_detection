@@ -5,20 +5,28 @@ import 'package:indoor_object_detection/widgets/text_font_style.dart';
 
 class CustomButton extends StatelessWidget {
   final Function() onTap;
-  final EdgeInsetsGeometry? buttonPadding;
-  final EdgeInsetsGeometry? buttonMargin;
-  final double borderRadius;
   final String iconPath;
+  final double iconSize;
+  final Color iconColor;
   final String title;
+  final double fontSize;
+  final FontWeight fontWeight;
+  final bool showArrow;
+  final bool showDistance;
+  final String distance;
 
   const CustomButton({
     super.key,
     required this.onTap,
-    this.buttonPadding,
-    this.buttonMargin,
-    this.borderRadius = 10.0,
     required this.iconPath,
+    this.iconSize = 60.0,
+    this.iconColor = Colors.black,
     required this.title,
+    this.fontSize = fontButton,
+    this.fontWeight = FontWeight.bold,
+    this.showArrow = true,
+    this.showDistance = false,
+    this.distance = '0',
   });
 
   @override
@@ -26,25 +34,66 @@ class CustomButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: MediaQuery.of(context).size.width,
-        margin: buttonMargin,
-        padding:
-            buttonPadding ??
-            EdgeInsets.symmetric(horizontal: marginX2, vertical: marginX2),
+        height: 100.0,
+        padding: const EdgeInsets.symmetric(horizontal: marginX2),
         decoration: BoxDecoration(
           color: Colors.grey.shade300,
-          borderRadius: BorderRadius.circular(borderRadius),
+          borderRadius: BorderRadius.circular(10.0),
         ),
         child: Row(
           children: [
-            SizedBox(
-              height: 65.0,
-              width: 65.0,
-              child: SvgPicture.asset('assets/icons/$iconPath'),
+            Visibility(
+              visible: iconPath != '',
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    iconPath,
+                    height: iconSize,
+                    color: iconColor,
+                  ),
+                  const SizedBox(width: 20.0),
+                ],
+              ),
             ),
-            SizedBox(width: margin),
-            TextFontStyle(title, size: 24.0, weight: FontWeight.bold),
+            TextFontStyle(
+              title,
+              size: fontSize,
+              weight: fontWeight,
+            ),
+            const Spacer(),
+            showArrow
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.arrow_forward_ios_rounded),
+                      SizedBox(height: showDistance ? 10.0 : 0),
+                      showDistance
+                          ? _distanceBox(distance: distance)
+                          : const SizedBox(),
+                    ],
+                  )
+                : const SizedBox(),
           ],
+        ),
+      ),
+    );
+  }
+
+  _distanceBox({required String distance}) {
+    return Container(
+      width: 80.0,
+      height: 35.0,
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: Center(
+        child: TextFontStyle(
+          '${distance}m',
+          size: fontSizeL,
+          weight: FontWeight.bold,
+          color: Colors.white,
         ),
       ),
     );
