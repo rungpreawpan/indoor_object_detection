@@ -2,13 +2,11 @@ class SettingsModel {
   bool? useSpeechRecognition;
   String? speed;
   String? language;
-  String? theme;
 
   SettingsModel({
     this.useSpeechRecognition,
     this.speed,
     this.language,
-    this.theme,
   });
 
   factory SettingsModel.fromJSON(Map<String, dynamic> json) {
@@ -16,7 +14,6 @@ class SettingsModel {
       useSpeechRecognition: json['use_speech_recognition'],
       speed: json['speed'],
       language: json['language'],
-      theme: json['theme'],
     );
   }
 
@@ -25,7 +22,6 @@ class SettingsModel {
       'use_speech_recognition': useSpeechRecognition,
       'speed': speed,
       'language': language,
-      'theme': theme,
     };
   }
 }

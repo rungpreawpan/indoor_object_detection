@@ -1,75 +1,20 @@
 const Map<String, String> en = {
-  // register
-  'register': 'Register',
-  'firstname': 'Firstname',
-  'lastname': 'Lastname',
-  'username': 'Username',
-  'password': 'Password',
-  'email': 'Email',
-  'uuid': 'UUID',
-  'please enter your': 'Please enter your ',
-  'register success': 'Successfully registered',
-  'already have account': 'Already have an account? Log in here',
-
-  // login
-  'login': 'Login',
-  'dont have account': "Don't have an account? Register here",
-
-  // forget password
-  'forget password': 'Forget Password',
-  'verify': 'Verify Identity',
-  'send otp': 'Send OTP',
-  'otp': 'OTP',
-  'reset password': 'Reset Password',
-  'ref code': 'Ref. code',
-  'confirm password': 'Confirm Password',
-  'password not match': 'Password do not match',
-
   // features list
-  'navigation': 'Navigation',
   'object detection': 'Object Detection',
   'scan text': 'Scan Text',
-
-  // navigation
-  'location': 'Locations',
-  'start navigation': 'Start Navigation',
-
-  // building list
-  'building a': 'Building A',
-  'building b': 'Building B',
-  'building c': 'Building C',
-
-  // list in building
-  'near you': 'Near you',
-  'favorite': 'Favorite',
-  'all categories': 'All categories',
-  'level': 'Level',
-
-  // category
-  'class room': 'Class room',
-  'office': 'Office',
-  'elevator': 'Elevator',
-  'toilet': 'Toilet',
-  'exit': 'Exit',
-
-  // navigation
-  'start': 'Start',
 
   // application page
   'main page': 'Main Page',
   'settings': 'Settings',
-  'logout': 'Logout',
 
   // intro
-  'welcome to moviqox': 'Welcome to MoviqoX\nApplication for the visually impaired',
+  'welcome to guidestep': 'Welcome to GuideStep\nApplication for the visually impaired',
   'back': 'Back',
   'start application': 'Start Application',
   'camera intro description': 'Application wants to access your Camera',
+  'gallery intro description': 'Application wants to access your Gallery',
   'mic intro description': 'Application wants to access your Microphone',
   'stt intro description': 'Application wants to access Speech-To-Text',
-  'accessibility intro description': 'Application wants to access Accessibility',
-  'location intro description': 'Application wants to access your Location',
-  'bluetooth intro description': 'Application wants to access your Bluetooth',
 
   // etc
   'data not found': 'Data not found',
@@ -102,9 +47,6 @@ const Map<String, String> en = {
   'language': 'Language',
   'thai': 'Thai',
   'english': 'English',
-  'theme': 'Theme',
-  'light': 'Light',
-  'dark': 'Dark',
   'about application': 'About application',
   'contact developer': 'Contact developer',
   'contact name': 'Contact name',
@@ -119,12 +61,14 @@ const Map<String, String> en = {
   'name': 'Name',
   'save': 'Save',
   'data update successful': 'Data update successful',
-  'registered uuid': 'Registered UUID',
-  'uuid not match': 'The UUID does not match the registered UUID',
-  'do you want to logout': 'Do you want to logout?',
+  'permission': 'Permission',
 
   // widget
   'camera': 'Camera',
   'gallery': 'Gallery',
   'loading': 'Loading',
+  'mic': 'Microphone',
+  'stt': 'Speech-To-Text',
+  'allowed': 'Allowed',
+  'denied': 'Denied',
 };

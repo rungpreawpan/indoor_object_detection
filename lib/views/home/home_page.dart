@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   FlutterSecureStorage storage = const FlutterSecureStorage();
 
   final stt.SpeechToText _speech = stt.SpeechToText();
+  //TODO
 
   List featuresList = [
     {

@@ -1,16 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:indoor_object_detection/constant/value_constant.dart';
 import 'package:indoor_object_detection/controller/app_info_controller.dart';
-import 'package:indoor_object_detection/views/intro/controller/intro_controller.dart';
 import 'package:indoor_object_detection/views/intro/intro_page.dart';
 import 'package:indoor_object_detection/widgets/custom_bottom_nav.dart';
 import 'package:indoor_object_detection/widgets/text_font_style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'settings/controller/settings_controller.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -21,8 +19,6 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   final AppInfoController _appInfoController = Get.put(AppInfoController());
-  final IntroController _introController = Get.put(IntroController());
-  final SettingsController _settingsController = Get.find();
 
   FlutterSecureStorage storage = const FlutterSecureStorage();
 
@@ -32,6 +28,7 @@ class _SplashPageState extends State<SplashPage> {
 
     _checkFirstRun();
     _checkVersion();
+    _settings();
     _redirect();
   }
 
@@ -54,24 +51,28 @@ class _SplashPageState extends State<SplashPage> {
     await Future.delayed(const Duration(seconds: 2));
 
     // for dev only
-    // await storage.delete(key: 'register');
-    // await storage.delete(key: 'login');
     // await storage.delete(key: 'permission');
 
-    // await storage.write(key: 'login', value: 'true');
-
     String? permission = await storage.read(key: 'permission');
-    String? register = await storage.read(key: 'register');
 
     if (permission == null) {
       Get.off(() => const IntroPage());
     } else {
-      if (register == null) {
-        _introController.currentPage(7);
-        Get.off(() => const IntroPage());
-      } else {
-        Get.off(() => const CustomNavBar());
-      }
+      Get.off(() => const CustomNavBar());
+    }
+  }
+
+  _settings() async {
+    String? settingsValue = await storage.read(key: 'settings_value');
+
+    if (settingsValue == null) {
+      String settingsData = jsonEncode({
+        'use_speech_recognition': true,
+        'speed': 'normal',
+        'language': Get.locale.toString() == 'th' ? 'thai' : 'english',
+      });
+
+      await storage.write(key: 'settings_value', value: settingsData);
     }
   }
 

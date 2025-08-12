@@ -9,6 +9,7 @@ import 'package:indoor_object_detection/views/settings/components/settings_label
 import 'package:indoor_object_detection/views/settings/contact_dev_page.dart';
 import 'package:indoor_object_detection/views/settings/controller/settings_controller.dart';
 import 'package:indoor_object_detection/views/settings/model/settings_model.dart';
+import 'package:indoor_object_detection/views/settings/permission_page.dart';
 import 'package:indoor_object_detection/widgets/custom_item_picker.dart';
 import 'package:indoor_object_detection/widgets/custom_item_picker_cell.dart';
 import 'package:indoor_object_detection/widgets/custom_loading.dart';
@@ -47,7 +48,6 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   _prepareData() async {
-    String? userData = await storage.read(key: 'user_data');
     String? settingsData = await storage.read(key: 'settings_value');
 
     if (settingsData != null) {
@@ -265,6 +265,14 @@ class _SettingsPageState extends State<SettingsPage> {
             'about application'.tr,
             size: fontSizeXL,
             weight: FontWeight.bold,
+          ),
+          const SizedBox(height: marginX2),
+          SettingsLabel(
+            title: 'permission'.tr,
+            settingsLabelStyle: SettingsLabelStyle.interact,
+            onTap: () {
+              Get.to(() => const PermissionPage());
+            },
           ),
           const SizedBox(height: marginX2),
           SettingsLabel(

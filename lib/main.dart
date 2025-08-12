@@ -6,14 +6,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:indoor_object_detection/constant/value_constant.dart';
 import 'package:indoor_object_detection/localization/localize.dart';
+import 'package:indoor_object_detection/views/intro/controller/intro_controller.dart';
 import 'package:indoor_object_detection/views/splash_page.dart';
-import 'package:indoor_object_detection/widgets/custom_nav_bar.dart';
 import 'views/settings/controller/settings_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Get.put(SettingsController());
+  Get.put(IntroController());
 
   SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp],
