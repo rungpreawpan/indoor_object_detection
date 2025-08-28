@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:indoor_object_detection/constant/value_constant.dart';
 import 'package:indoor_object_detection/controller/app_info_controller.dart';
 import 'package:indoor_object_detection/views/object_detection/object_detection_page.dart';
+import 'package:indoor_object_detection/views/obstacle/obstacle_detection_page.dart';
 import 'package:indoor_object_detection/views/ocr/ocr_page.dart';
 import 'package:indoor_object_detection/views/settings/controller/settings_controller.dart';
 import 'package:indoor_object_detection/widgets/custom_button.dart';
@@ -25,12 +26,15 @@ class _HomePageState extends State<HomePage> {
   FlutterSecureStorage storage = const FlutterSecureStorage();
 
   final stt.SpeechToText _speech = stt.SpeechToText();
-  //TODO
 
   List featuresList = [
     {
       'title': 'object detection'.tr,
       'icon_path': 'assets/icons/object_detect_icon.svg'
+    },
+    {
+      'title': 'obstacle detection'.tr,
+      'icon_path': 'assets/icons/obstacle_icon.svg'
     },
     {'title': 'scan text'.tr, 'icon_path': 'assets/icons/ocr_icon.svg'},
   ];
@@ -50,6 +54,8 @@ class _HomePageState extends State<HomePage> {
                   onTap: () async {
                     if (item['title'] == 'object detection'.tr) {
                       Get.to(() => const ObjectDetectionPage());
+                    } else if (item['title'] == 'obstacle detection'.tr) {
+                      Get.to(() => const ObstacleDetectionPage());
                     } else if (item['title'] == 'scan text'.tr) {
                       Get.to(() => const OcrPage());
                     } else {

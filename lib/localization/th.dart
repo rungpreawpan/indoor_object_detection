@@ -1,5 +1,6 @@
 const Map<String, String> th = {
   // features list
+  'obstacle detection': 'ตรวจจับสิ่งกีดขวาง',
   'object detection': 'ตรวจจับวัตถุ',
   'scan text': 'สแกนตัวหนังสือ',
 

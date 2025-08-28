@@ -8,7 +8,7 @@ import 'package:image/image.dart' as img;
 import 'package:indoor_object_detection/constant/value_constant.dart';
 import 'package:indoor_object_detection/controller/tts_manager.dart';
 import 'package:indoor_object_detection/views/object_detection/controller/object_detection_controller.dart';
-import 'package:indoor_object_detection/views/object_detection/model/object_detection_model.dart';
+import 'package:indoor_object_detection/views/object_detection/model/boxes_model.dart';
 import 'package:indoor_object_detection/views/settings/controller/settings_controller.dart';
 import 'package:indoor_object_detection/widgets/custom_loading.dart';
 import 'package:indoor_object_detection/widgets/main_template.dart';
@@ -116,16 +116,13 @@ class _ObjectDetectionResultPageState extends State<ObjectDetectionResultPage> {
           children: [
             SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.all(marginX2),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _objectImage(),
-                    const SizedBox(height: marginX2),
-                    _objectLabels(),
-                  ],
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _objectImage(),
+                  const SizedBox(height: marginX2),
+                  _objectLabels(),
+                ],
               ),
             ),
             _loading(),

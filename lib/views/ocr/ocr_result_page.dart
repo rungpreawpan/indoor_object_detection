@@ -54,7 +54,7 @@ class _OcrResultPageState extends State<OcrResultPage> {
   @override
   Widget build(BuildContext context) {
     return MainTemplate(
-      appBarTitle: 'scan result'.tr,
+      appBarTitle: 'scan results'.tr,
       showBackButton: true,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -63,9 +63,15 @@ class _OcrResultPageState extends State<OcrResultPage> {
             padding: const EdgeInsets.all(marginX2),
             child: Column(
               children: [
-                Image.file(
-                  widget.imageFile,
-                  fit: BoxFit.fitWidth,
+                Container(
+                  height: Get.height / 3,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                  ),
+                  child: Image.file(
+                    widget.imageFile,
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
                 const SizedBox(height: marginX2),
                 TextFontStyle(

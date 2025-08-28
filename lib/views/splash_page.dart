@@ -18,7 +18,7 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  final AppInfoController _appInfoController = Get.put(AppInfoController());
+  final AppInfoController _appInfoController = Get.find();
 
   FlutterSecureStorage storage = const FlutterSecureStorage();
 

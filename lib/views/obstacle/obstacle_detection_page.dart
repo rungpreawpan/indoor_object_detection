@@ -8,34 +8,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:indoor_object_detection/constant/value_constant.dart';
 import 'package:indoor_object_detection/controller/tts_manager.dart';
-import 'package:indoor_object_detection/views/object_detection/controller/object_detection_controller.dart';
-import 'package:indoor_object_detection/views/object_detection/model/boxes_model.dart';
-import 'package:indoor_object_detection/views/object_detection/object_detection_result_page.dart';
+import 'package:indoor_object_detection/views/obstacle/controller/obstacle_controller.dart';
 import 'package:indoor_object_detection/views/settings/controller/settings_controller.dart';
 import 'package:indoor_object_detection/views/settings/model/settings_model.dart';
 import 'package:indoor_object_detection/widgets/custom_camera_button.dart';
-import 'package:indoor_object_detection/widgets/custom_gallery_button.dart';
 import 'package:indoor_object_detection/widgets/custom_loading.dart';
 import 'package:indoor_object_detection/widgets/custom_switch_camera_button.dart';
 import 'package:indoor_object_detection/widgets/main_template.dart';
-import 'package:indoor_object_detection/widgets/text_font_style.dart';
-import 'package:photo_manager/photo_manager.dart';
 import 'package:image/image.dart' as img;
+import 'package:indoor_object_detection/widgets/text_font_style.dart';
 import 'package:translator/translator.dart';
 
-class ObjectDetectionPage extends StatefulWidget {
-  const ObjectDetectionPage({super.key});
+class ObstacleDetectionPage extends StatefulWidget {
+  const ObstacleDetectionPage({super.key});
 
   @override
-  State<ObjectDetectionPage> createState() => _ObjectDetectionPageState();
+  State<ObstacleDetectionPage> createState() => _ObstacleDetectionPageState();
 }
 
-class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
-  final ObjectDetectionController _objectDetectionController =
-      Get.put(ObjectDetectionController());
+class _ObstacleDetectionPageState extends State<ObstacleDetectionPage> {
+  final ObstacleController _obstacleController = Get.put(ObstacleController());
   final SettingsController _settingsController = Get.find();
 
   final FlutterSecureStorage storage = const FlutterSecureStorage();
@@ -52,8 +46,6 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
   Timer? _autoCaptureTimer;
   bool _isCapturing = false;
 
-  Uint8List? _thumbnailImage;
-
   String? translatedText;
 
   @override
@@ -61,7 +53,6 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
     super.initState();
 
     _initializeCamera();
-    _loadLatestImage();
   }
 
   Future<void> _initializeCamera([int cameraIndex = 0]) async {
@@ -89,70 +80,41 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
     }
   }
 
-  Future<void> _loadLatestImage() async {
-    final permission = await PhotoManager.requestPermissionExtend();
-
-    if (permission.isAuth || permission == PermissionState.limited) {
-      final albums = await PhotoManager.getAssetPathList(
-        type: RequestType.image,
-        onlyAll: true,
-      );
-
-      if (albums.isNotEmpty) {
-        final recentAlbum = albums.first;
-        final recentAssets =
-            await recentAlbum.getAssetListPaged(page: 0, size: 1);
-
-        if (recentAssets.isNotEmpty) {
-          final asset = recentAssets.first;
-          final thumb =
-              await asset.thumbnailDataWithSize(const ThumbnailSize(200, 200));
-          _thumbnailImage = thumb;
-          setState(() {});
-        }
-      }
-
-      if (permission == PermissionState.limited) {
-        await PhotoManager.presentLimited();
-      }
-    }
-  }
-
-  Future _speak() async {
-    if (_objectDetectionController.objectDetected?.boxes != null) {
-      List<String> objects = [];
-      translatedText = null;
-
-      for (BoxesModel object
-          in _objectDetectionController.objectDetected!.boxes!) {
-        if (object.label != null) {
-          objects.add(object.label!);
-        }
-      }
-
-      if (objects.isNotEmpty) {
-        List translations = await Future.wait(
-          objects.map((obj) async {
-            Translation? translation;
-
-            if (_settingsController.currentLocale.value.languageCode == 'th') {
-              translation = await translator.translate(obj, to: 'th');
-            } else {
-              translation = await translator.translate(obj, to: 'en');
-            }
-
-            return translation.text;
-          }),
-        );
-
-        translatedText = translations.toSet().toList().join(', ');
-        await ttsManager.speak('${'detected'.tr} $translatedText');
-        HapticFeedback.heavyImpact();
-      } else {
-        await ttsManager.speak('unable to detect objects'.tr);
-      }
-    }
-  }
+  // Future _speak() async {
+  //   if (_objectDetectionController.objectDetected?.boxes != null) {
+  //     List<String> objects = [];
+  //     translatedText = null;
+  //
+  //     for (BoxesModel object
+  //     in _objectDetectionController.objectDetected!.boxes!) {
+  //       if (object.label != null) {
+  //         objects.add(object.label!);
+  //       }
+  //     }
+  //
+  //     if (objects.isNotEmpty) {
+  //       List translations = await Future.wait(
+  //         objects.map((obj) async {
+  //           Translation? translation;
+  //
+  //           if (_settingsController.currentLocale.value.languageCode == 'th') {
+  //             translation = await translator.translate(obj, to: 'th');
+  //           } else {
+  //             translation = await translator.translate(obj, to: 'en');
+  //           }
+  //
+  //           return translation.text;
+  //         }),
+  //       );
+  //
+  //       translatedText = translations.toSet().toList().join(', ');
+  //       await ttsManager.speak('${'detected'.tr} $translatedText');
+  //       HapticFeedback.heavyImpact();
+  //     } else {
+  //       await ttsManager.speak('unable to detect objects'.tr);
+  //     }
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -174,7 +136,7 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
   @override
   Widget build(BuildContext context) {
     return MainTemplate(
-      appBarTitle: 'object detection'.tr,
+      appBarTitle: 'obstacle detection'.tr,
       showBackButton: true,
       body: SafeArea(
         child: Container(
@@ -202,7 +164,10 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _galleryThumbnail(),
+                      SizedBox(
+                        width: 50.0,
+                        height: 50.0,
+                      ),
                       _cameraButton(),
                       _switchCamera(),
                     ],
@@ -210,7 +175,8 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
                 ),
               ),
               translatedText != null
-                  ? Align(
+                  ?
+              Align(
                       alignment: Alignment.topCenter,
                       child: _resultBox(
                         result: translatedText,
@@ -233,8 +199,9 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
       (timer) async {
         XFile file = await _cameraController!.takePicture();
 
-        await _objectDetectionController.uploadObject(File(file.path));
-        await _speak();
+        // TODO:
+        // await _objectDetectionController.uploadObject(File(file.path));
+        // await _speak();
 
         setState(() {});
       },
@@ -293,27 +260,6 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
     );
   }
 
-  _galleryThumbnail() {
-    return CustomGalleryButton(
-      onTap: () async {
-        XFile? file = await ImagePicker().pickImage(
-          source: ImageSource.gallery,
-        );
-
-        if (file != null) {
-          await _objectDetectionController.uploadObject(File(file.path));
-
-          Get.to(
-            () => ObjectDetectionResultPage(
-              imageFile: File(file.path),
-            ),
-          );
-        }
-      },
-      thumbnailImage: _thumbnailImage,
-    );
-  }
-
   _resultBox({
     required String? result,
   }) {
@@ -350,7 +296,7 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
   _loading() {
     return Obx(() {
       return Visibility(
-        visible: _objectDetectionController.isLoading.value,
+        visible: _obstacleController.isLoading.value,
         child: const CustomLoading(),
       );
     });

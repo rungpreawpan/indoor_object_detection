@@ -1,5 +1,6 @@
 const Map<String, String> en = {
   // features list
+  'obstacle detection': 'Obstacle Detection',
   'object detection': 'Object Detection',
   'scan text': 'Scan Text',
 
